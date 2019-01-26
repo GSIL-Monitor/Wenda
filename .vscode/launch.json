@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SensitiveService",
+            "request": "launch",
+            "mainClass": "com.nowcoder.service.SensitiveService",
+            "projectName": "wenda"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WendaUtil",
+            "request": "launch",
+            "mainClass": "com.nowcoder.util.WendaUtil",
+            "projectName": "wenda"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WendaApplication",
+            "request": "launch",
+            "mainClass": "com.nowcoder.WendaApplication",
+            "projectName": "wenda"
+        }
+    ]
+}

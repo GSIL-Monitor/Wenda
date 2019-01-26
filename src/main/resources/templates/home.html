@@ -1,0 +1,11 @@
+<html>
+<body>
+<pre>
+一个测试页啦啦啦啦啦啦
+    #foreach($vo in $vos)
+        <textarea rows="3" cols="20">${vo.question.getTitle},$!{Str}</textarea>
+        $vo.question.title,$foreach.index,$foreach.count
+    #end
+</pre>
+</body>
+</html>

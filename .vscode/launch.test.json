@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "wenda",
+                "projectName": "wenda",
+                "workingDirectory": "f:\\java program\\Wenda ReplicaProgram",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "wenda",
+                "projectName": "wenda",
+                "workingDirectory": "f:\\java program\\Wenda ReplicaProgram",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
