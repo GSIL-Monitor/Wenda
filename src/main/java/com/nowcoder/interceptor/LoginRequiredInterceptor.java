@@ -48,7 +48,7 @@ public class LoginRequiredInterceptor implements HandlerInterceptor{
                 // 这里的addObject方法实际上是将键值埋到返回的url中，而不是模板中，user是对象，埋不进去:错!!!确实是加View中进去了          
                 modelAndView.addObject("user",hostHolder.getUser());
                 // modelAndView.addObject("fixString","能显示");
-                System.out.println("postHandle已将user加入modelandview");     
+                // System.out.println("postHandle已将user加入modelandview");     
              }
 
     }

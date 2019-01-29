@@ -6,6 +6,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.service.UserService;
 
@@ -29,6 +32,9 @@ public class LoginController1{
 
     @Autowired
     HostHolder hostHolder;
+
+    @Autowired
+    EventProducer eventProducer;
 
     // 登录注册页
      @RequestMapping(path={"/reglogin"},method={RequestMethod.GET})
@@ -59,13 +65,16 @@ public class LoginController1{
                     cookie.setMaxAge(3600*24*7);
                 }
                 httpServletResponse.addCookie(cookie);
-                System.out.println("controller响应完毕，准备返回redirect");
+                // System.out.println("controller响应完毕，准备返回redirect");
                 // 现在我在controller里面加attribute,不在interceptor里面加了,但是还是不行，现在有两种情况：
                 /*
                 1.在controller里面加user属性且return "redirect:/",登录信息无效不显示；但在加user属性的基础上return "index",返回账户信息，但无最新动态中的问题显示
                 2.在passportInterceptor中加user属性并且在controller中return 'redirect'，登录信息无效；但若在interceptor中setviewname("header"),显示账户信息，但也无最新动态问题显示
                 */
                 // model.addAttribute("user",hostHolder.getUser());
+                eventProducer.fireEvent(new EventModel().setType(EventType.LOGIN).
+                setExts("username", username).setExts("email", "zjuyxy@qq.com")
+                .setActorId((int)map.get("userId")));
                 if (StringUtils.isNotBlank(callback)){
                     return "redirect:" + callback;
                 }

@@ -126,4 +126,8 @@ public class UserService{
     public void logout(String ticket){
         loginTicketDao.updateStatus(1, ticket);
     }
+
+    public User selectByName(String name){
+        return userDao.selectByName(name);
+    }
 }

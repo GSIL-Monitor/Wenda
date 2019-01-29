@@ -37,7 +37,7 @@ public class PassportInterceptor implements HandlerInterceptor{
             if(request.getCookies() != null){
                 for(Cookie cookie:request.getCookies()){
                     if(cookie.getName().equals("token")){
-                        System.out.println("passportInterceptor:拿到了cookie中的token");
+                        // System.out.println("passportInterceptor:拿到了cookie中的token");
                         token = cookie.getValue();
                         break;
                     }
@@ -52,7 +52,7 @@ public class PassportInterceptor implements HandlerInterceptor{
                 User user = userDao.selectById(loginTicket.getUserId());
                 hostHolder.setUser(user);
                 // 这里拿到的居然是上一个用户信息！！！！！，这是什么神仙bug....
-                System.out.println(String.format("拿到了User:  %s", user.getName()));
+                // System.out.println(String.format("拿到了User:  %s", user.getName()));
                 // 直接在controller之前就把user加入view试试：不行，报错
                 // modelAndView.addObject("user",hostHolder.getUser());
             }

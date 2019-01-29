@@ -1,10 +1,18 @@
 package com.nowcoder.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.nowcoder.model.Comment;
+import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.model.Question;
+import com.nowcoder.model.ViewObject;
+import com.nowcoder.service.CommentService;
+import com.nowcoder.service.LikeService;
 import com.nowcoder.service.QuestionService;
+import com.nowcoder.service.UserService;
 import com.nowcoder.util.WendaUtil;
 
 import org.slf4j.Logger;
@@ -26,6 +34,15 @@ public class QuestionController{
 
     @Autowired
     HostHolder hostHolder;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    LikeService likeService;
 
     @RequestMapping(path={"/question/add"},method={RequestMethod.POST})
     // 返回JSON传而不是页面了
@@ -55,6 +72,7 @@ public class QuestionController{
         return WendaUtil.getJsonString(1, "增加题目失败");
     }
 
+
     @RequestMapping(path="/question/{qid}",method={RequestMethod.GET})
      public String questionDetail(@PathVariable("qid") int qid,Model model){
          Question question = questionService.getQuestion(qid);
@@ -62,6 +80,25 @@ public class QuestionController{
              return WendaUtil.getJsonString(301, "打开问题失败");
          }
          model.addAttribute("question",question);
+        //  System.out.println("目前在questionController之前"+ qid);
+         List<Comment> commentList = commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
+        //  System.out.println("目前在questionController之后");
+         List<ViewObject> comments = new ArrayList<>();
+         for (Comment comment:commentList){
+             ViewObject vo = new ViewObject();
+             vo.set("comment", comment);
+             if (hostHolder.getUser() == null){
+                 vo.set("liked", 0);
+             }else{
+                 vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), comment.getId(), EntityType.ENTITY_COMMENT));
+             }
+             long likeCount = likeService.getLikeCount( comment.getId(), EntityType.ENTITY_COMMENT);
+             vo.set("likeCount", likeCount);
+            //  除了设置评论信息。还要设置评论用户的相关信息
+             vo.set("user", userService.getUser(comment.getUserId()));
+             comments.add(vo);
+         }
+         model.addAttribute("comments", comments);
          return "detail";
     }
 }
